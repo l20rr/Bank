@@ -1,0 +1,39 @@
+﻿@page "/wallet"
+
+<header>
+    <b>LOGO</b>
+    <div id="search">
+        <input type="text" @bind="Symbol" />
+        <button @onclick="Search">Pesquisar</button>
+    </div>
+    <a href="Login">
+        Entrar
+    </a>
+    <div class="dropdown">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+            Dropdown button
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/profile">Perfil</a></li>
+            <li><a class="dropdown-item" href="/wallet">Carteira</a></li>
+            <hr />
+            <li><a class="dropdown-item" href="/">Sair</a></li>
+        </ul>
+    </div>
+</header>
+
+<h3>Profile</h3>
+
+
+
+@code {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    private string Symbol;
+
+    private async Task Search()
+    {
+        NavigationManager.NavigateTo($"/Details/{Symbol}");
+    }
+}

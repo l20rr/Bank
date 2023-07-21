@@ -1,0 +1,40 @@
+﻿@page "/Edit/{UserId}"
+@using System.Net.Http
+@using System.Text.Json
+@using Bank.Client.Services;
+@inject HttpClient httpClient
+@using Bank.Shared
+
+<article class="content px-4 bg-transparent">
+    <div class="central">
+        <form Model="@User">
+            <h1>Editar</h1>
+            <div class="form-group">
+                <label for="exampleInputName">Nome</label>
+                <InputText id="firstName" class="form-control col-sm-8" @bind-Value="@User.FirstName" placeholder="Enter first name"></InputText>
+                <small id="emailHelp" class="form-text text-muted">We'll never share your name with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputLastName">Apelido</label>
+                <input id="lastName" class="form-control col-sm-8" @bind="@User.LastName" />
+                <small id="emailHelp" class="form-text text-muted">We'll never share your name with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" @bind="@User.Email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" @bind="@User.UPassword">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1"> Repetir Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" @bind="@User.ConfirmPassword">
+            </div>
+            <button type="button" class="btn btn-outline-success btn-lg btn-block" @onclick="Edit">Salvar Usuario</button>
+            <button type="button" class="btn btn-outline-danger btn-lg btn-block" @onclick="Del">Deletar Usuario</button>
+        </form>
+    </div>
+</article>
+

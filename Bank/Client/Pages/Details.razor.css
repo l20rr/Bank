@@ -1,0 +1,56 @@
+﻿#cont_info{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center;
+}
+
+.btns {
+    width: 100vw;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+    .btns > button {
+        margin: 30px;
+        width: 150px;
+        height: 30px;
+        border: none;
+        border-radius: 10px;
+        background-color: #DEA247;
+    }
+.header_info{
+    display:flex;
+    width: 40vw;
+    height:10vh;
+   
+    justify-content: space-between;
+    align-items:center;
+    margin:20px;
+}
+
+.infos {
+    color:black;
+    color:aliceblue;
+    width: 50vw;
+    
+}
+
+#titulo {
+    display:flex;
+    justify-content:center;
+    margin:20px;
+    width: 20vw;
+}
+
+ 
+
+    #dados {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50vw;
+    }

@@ -1,0 +1,92 @@
+﻿@page "/Details/{Symbol}"
+@using System.Net.Http
+@using System.Text.Json
+@using System.Linq
+
+<PageTitle>Details</PageTitle>
+
+<article class="content container px-4 bg-transparent">
+    <header>
+        <b>LOGO</b>
+        <div id="search">
+            <input type="text" @bind="Symbol" />
+            <button @onclick="Search">Pesquisar</button>
+        </div>
+        <a href="Login">
+            Entrar
+        </a>
+    </header>
+
+    <div id="cont_info">
+        <div class="btns">
+            <button>Maior close</button>
+            <button>Todos os dados</button>
+            <button>Maior Open</button>
+            <button>Mais antiga</button>
+            <button>Mais baixa</button>
+        </div>
+
+
+        @if (datas != null)
+        {
+            @if (datas.Count > 0)
+            {
+                var firstData = datas[0];
+
+                <div class="header_info">
+                    <h1>@firstData.MetaData.Symbol</h1>
+                    <h3>@firstData.MetaData.LastRefreshed</h3>
+                    <button>Add na certeira</button>
+                </div>
+            }
+
+            @if (datas.Count > 12)
+            {
+                @foreach (var data in datas.Take(12))
+                {
+                    <div class="infos">
+                        @foreach (var item in data.TimeSeries.Take(12))
+                        {
+                            <div id="titulo">
+                                <h3>@item.Key</h3>
+                            </div>
+                            <div id="dados">
+                                <ul>
+                                    <li>Open: @item.Value.Open</li>
+                                    <li>High: @item.Value.High</li>
+                                    <li>Low: @item.Value.Low</li>
+                                    <li>Close: @item.Value.Close</li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                    <br /> 
+                }
+            }
+            else
+            {
+                @foreach (var data in datas)
+                {
+                    <div class="infos">
+                        @foreach (var item in data.TimeSeries.Take(12))
+                        {
+                            <div id="titulo">
+                                <h3>@item.Key</h3>
+                            </div>
+                            <div id="dados">
+                                <ul>
+                                    <li>Open: @item.Value.Open</li>
+                                    <li>High: @item.Value.High</li>
+                                    <li>Low: @item.Value.Low</li>
+                                    <li>Close: @item.Value.Close</li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                    <br /> 
+                }
+            }
+        }
+    </div>
+</article>
+

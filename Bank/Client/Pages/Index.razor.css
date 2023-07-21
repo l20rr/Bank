@@ -1,0 +1,46 @@
+﻿
+.section {
+    background: rgba( 255, 255, 255, 0.90 );
+    backdrop-filter: blur( 15.5px );
+    -webkit-backdrop-filter: blur( 13.5px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    height: 75vh;
+    width: 80vw;
+    border-radius: 10px;
+}
+
+.section > a {
+    text-decoration:none;
+}
+
+header {
+    height: 7vh;
+    display: flex;
+    justify-content: space-between;
+    width: 80vw;
+    margin: 0 auto;
+}
+
+    header > input, button {
+        height: 30px;
+    }
+
+    header > #search > button {
+        border: none;
+        background-color: #DEA247;
+    }
+
+.action_div {
+    height: 7vh;
+    margin: 50px;
+  color: black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+    .action_div:hover {
+        background: rgba( 255, 255, 255, 0.70 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.20 );
+    }

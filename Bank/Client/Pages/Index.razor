@@ -1,0 +1,76 @@
+﻿@page "/"
+@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Components
+
+<PageTitle>Home</PageTitle>
+
+<article class="content container px-4 bg-transparent">
+
+    <header>
+        <b>LOGO</b>
+        <div id="search">
+            <input type="text" @bind="Symbol" />
+            <button @onclick="Search">Pesquisar</button>
+        </div>
+        <a href="Login">
+            Entrar
+        </a>
+        <div class="dropdown">
+            <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown">
+                Menu
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="@GetProfileLink()">Perfil</a></li>
+                <li><a class="dropdown-item" href="@GetWalletLink()">Carteira</a></li>
+                <hr />
+                <li><a class="dropdown-item" href="/">Sair</a></li>
+            </ul>
+        </div>
+    </header>
+    <h2>Melhores ações de 2022</h2>
+    <br />
+    <section class="section">
+        <a href="Details/WTM">
+        <div class="action_div">
+            WTM White Mountains Insurance Group Ltd
+        </div>
+        </a>
+        <a href="Details/TPL ">
+        <div class="action_div">
+            TPL Texas Pacific Land Corp
+        </div>
+        </a>
+        <a href="Details/Y">
+        <div class="action_div">
+           Y Alleghany Corporation
+        </div>
+        </a>
+        <a href="Details/NRGU">
+        <div class="action_div">
+            NRGU MicroSectors™ U.S. Big Oil Index 3X Leveraged ETNs
+        </div>
+        </a>
+        <a href="Details/NOC">
+        <div class="action_div">
+            NOC Northrop Grumman Corporation
+        </div>
+        </a>
+    </section>
+
+</article>
+
+@code {
+    [CascadingParameter] public int CurrentUserId { get; set; }
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    private string Symbol;
+
+    private async Task Search()
+    {
+        NavigationManager.NavigateTo($"/Details/{Symbol}");
+    }
+
+    private string GetProfileLink() => $"/profile/{CurrentUserId}";
+    private string GetWalletLink() => $"/wallet/{CurrentUserId}";
+}
