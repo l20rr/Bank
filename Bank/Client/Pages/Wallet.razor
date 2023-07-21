@@ -10,7 +10,7 @@
         Entrar
     </a>
     <div class="dropdown">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+        <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown">
             Dropdown button
         </button>
         <ul class="dropdown-menu">
@@ -22,8 +22,30 @@
     </div>
 </header>
 
-<h3>Profile</h3>
+<!-- Button trigger modal -->
+<button type="button" class="btn" style="background-color:#DEA247" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Criar carteira
+</button>
 
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="color:black" class="modal-title" id="staticBackdropLabel">Carteira</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h5 style="color:black">Nome da carteira</h5>
+              <input type="text"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success">save</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @code {

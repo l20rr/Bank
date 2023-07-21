@@ -18,7 +18,7 @@ namespace Bank.Client.Pages
         [Inject]
         private NavigationManager NavigationManager { get; set; }
         private bool showError = false;
-        //FeitoAA
+     
      
         private async Task LoginU()
         {
