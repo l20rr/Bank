@@ -1,5 +1,4 @@
 ﻿using Bank.Shared;
-
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +18,7 @@ namespace Bank.Client.Pages
         [Inject]
         private NavigationManager NavigationManager { get; set; }
         private bool showError = false;
-        //Feito
+        //FeitoAA
      
         private async Task LoginU()
         {
