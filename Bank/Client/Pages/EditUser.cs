@@ -13,25 +13,34 @@ namespace Bank.Client.Pages
 {
     public partial class EditUser
     {
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
+
         private User User { get; set; } = new User();
 
         [Inject]
         public IUserDataService UserDataService { get; set; }
 
-        [Inject]
-        private NavigationManager NavigationManager { get; set; }
+        private string CurrentUserIdString;
 
-        [Parameter]
-        public string UserId { get; set; }
+        protected async override Task OnInitializedAsync()
+        {
+            CurrentUserIdString = await localStore.GetItemAsync<string>("CurrentUserId");
+            if (!string.IsNullOrEmpty(CurrentUserIdString) && int.TryParse(CurrentUserIdString, out int CurrentUserId))
+            {
+                User = await UserDataService.GetUserId(CurrentUserId);
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/Login");
+            }
+        }
 
         private async Task Edit()
         {
             try
             {
-                // Conversão do UserId para o tipo apropriado (exemplo: int)
-                int userId = int.Parse(UserId);
-
-                // Chamada assíncrona do serviço IUserService para adicionar o usuário
+                // Chamada assíncrona do serviço IUserService para atualizar o usuário
                 var response =  UserDataService.UpdateUser(User);
 
                 if (response != null)
@@ -39,7 +48,7 @@ namespace Bank.Client.Pages
                     Console.WriteLine("Sucesso: " + JsonSerializer.Serialize(response));
 
                     // Navegação para a página de perfil do usuário editado
-                    NavigationManager.NavigateTo($"/profile/{userId}");
+                    NavigationManager.NavigateTo("/profile", forceLoad: true);
                 }
                 else
                 {
@@ -52,10 +61,12 @@ namespace Bank.Client.Pages
             }
         }
 
-        protected async Task Del()
+        private async Task Del()
         {
+          
             await UserDataService.DeleteUser(User.UserId);
-
+            await localStore.RemoveItemAsync("CurrentUserId");
+            NavigationManager.NavigateTo("/", forceLoad: true);
         }
     }
 }

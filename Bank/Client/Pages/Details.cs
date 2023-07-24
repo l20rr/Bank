@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Bank.Client.Services;
+using Bank.Shared;
+using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -93,5 +96,46 @@ namespace Bank.Client.Pages
             public string Low { get; set; }
             public string Close { get; set; }
         }
+        private Wallet Wallet{ get; set; } = new Wallet();
+
+        [Inject]
+        private IWalletService WalletService { get; set; }
+
+        [Inject]
+        private Blazored.LocalStorage.ILocalStorageService localStore { get; set; }
+
+        private async Task CheckWallets(string symbolName)
+        {
+            var CurrentUserIdString = await localStore.GetItemAsync<string>("CurrentUserId");
+            if (int.TryParse(CurrentUserIdString, out int currentUserId))
+            {
+                var wallets = await WalletService.GetAllWallets();
+                var walletToMatch = wallets.FirstOrDefault(wallet => wallet.UserId == currentUserId);
+
+                if (walletToMatch != null)
+                {
+                    await AddSymbol(walletToMatch.WalletId, symbolName);
+                }
+                else
+                {
+                    Console.WriteLine("Não existe uma carteira correspondente ao usuário.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("O valor de CurrentUserIdString não é válido.");
+            }
+        }
+        private async Task AddSymbol(int walletId, string symbolName)
+        {
+            // Aqui você pode chamar o serviço para adicionar o símbolo à carteira usando o walletId e o symbolName
+            // Exemplo:
+            // var response = await WalletService.AddSymbolToWallet(walletId, symbolName);
+            // Verifique o serviço de carteira para saber como adicionar o símbolo à carteira.
+            Console.WriteLine($"Adicionando o símbolo {symbolName} à carteira com WalletId: {walletId}");
+        }
+
+
+
     }
 }

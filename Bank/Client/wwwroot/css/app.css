@@ -122,3 +122,22 @@ form > button {
     width: 80vw;
     height: 90vh;
 }
+
+
+header {
+    height: 9vh;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    width: 80vw;
+    margin: 10px auto;
+}
+
+    header > input, button {
+        height: 30px;
+    }
+
+    header > #search > button {
+        border: none;
+        background-color: #DEA247;
+    }

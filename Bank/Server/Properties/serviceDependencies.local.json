@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:BankServerContextConnection"
+    },
+    "secrets1": {
+      "type": "secrets.user"
+    },
+    "mssql2": {
+      "serviceConnectorResourceId": "",
+      "secretStore": "LocalSecretsFile",
+      "type": "mssql.local",
+      "connectionId": "\"DefaultConnection\":\"Server=LUCASPC::SQLEXPRESS;Database=BankPOC;UserID=sa;Password=Carcavelos5a;MultipleActiveResultSets=true;TrustServerCertificate=True\""
+    }
+  }
+}

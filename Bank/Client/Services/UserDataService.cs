@@ -35,7 +35,8 @@ namespace Bank.Client.Services
         }
         public async Task UpdateUser(User user)
         {
-            var userJson = new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json");
+            var userJson =
+                new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json");
             await _httpClient.PutAsync("api/users", userJson);
         }
 

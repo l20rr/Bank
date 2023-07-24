@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:BankServerContextConnection"
+    },
+    "secrets1": {
+      "type": "secrets"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "\"DefaultConnection\":\"Server=LUCASPC::SQLEXPRESS;Database=BankPOC;UserID=sa;Password=Carcavelos5a;MultipleActiveResultSets=true;TrustServerCertificate=True\""
+    }
+  }
+}

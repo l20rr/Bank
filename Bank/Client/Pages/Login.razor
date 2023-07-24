@@ -6,11 +6,12 @@
 @inject IUserDataService UserDataService
 @using Bank.Shared;
 
+@inject Blazored.LocalStorage.ILocalStorageService localStore
 
 
 
 
-<article class="content px-4 bg-transparent">
+
     <div class="central">
         <form id="login" Model="@User">
         <h1>Login</h1>
@@ -31,5 +32,5 @@
             </div>
     </form>
 </div>
-</article>
+
 

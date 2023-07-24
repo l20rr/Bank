@@ -25,8 +25,8 @@ namespace Bank.Client.Pages
             {
                 Console.WriteLine("Sucesso: " + JsonSerializer.Serialize(response));
                 NavigationManager.NavigateTo($"/");
-      
-             }
+
+            }
             else
             {
                 Console.WriteLine("Erro: Ocorreu um problema ao salvar o usuário.");

@@ -29,7 +29,7 @@ namespace Bank.Api.Models
             return result.Entity;
         }
 
-        public async Task<User> UpdateUser(User user)
+        public User UpdateUser(User user)
         {
             var foundUser = _appDbContext.Users.FirstOrDefault(e => e.UserId == user.UserId);
 
@@ -53,14 +53,13 @@ namespace Bank.Api.Models
             return null;
         }
 
-        public async Task<User> DeleteUser(int userId)
+        public void DeleteUser(int userId)
         {
-            var user = _appDbContext.Users.FirstOrDefault(c => c.UserId == userId);
-            if (user != null) {
-                _appDbContext.Users.Remove(user);
-                await _appDbContext.SaveChangesAsync();
-            }
-            return null;
+            var foundEmployee = _appDbContext.Users.FirstOrDefault(e => e.UserId == userId);
+            if (foundEmployee == null) return;
+
+            _appDbContext.Users.Remove(foundEmployee);
+            _appDbContext.SaveChanges();
         }
 
         public User GetUserById(int userId)

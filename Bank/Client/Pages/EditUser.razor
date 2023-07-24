@@ -1,11 +1,13 @@
-﻿@page "/Edit/{UserId}"
+﻿@page "/edituser"
 @using System.Net.Http
 @using System.Text.Json
 @using Bank.Client.Services;
 @inject HttpClient httpClient
 @using Bank.Shared
 
-<article class="content px-4 bg-transparent">
+@inject Blazored.LocalStorage.ILocalStorageService localStore
+
+
     <div class="central">
         <form Model="@User">
             <h1>Editar</h1>
@@ -36,5 +38,4 @@
             <button type="button" class="btn btn-outline-danger btn-lg btn-block" @onclick="Del">Deletar Usuario</button>
         </form>
     </div>
-</article>
 

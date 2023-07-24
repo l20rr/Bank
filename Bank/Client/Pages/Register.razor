@@ -4,9 +4,10 @@
 @using Bank.Client.Services;
 @inject HttpClient httpClient
 @inject IUserDataService UserDataService
+
 @using Bank.Shared
 
-<article class="content px-4 bg-transparent">
+
     <div class="central">
         <form Model="@User">
             <h1>Registar</h1>
@@ -33,8 +34,8 @@
                 <label for="exampleInputPassword1"> Repetir Password</label>
                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" @bind="@User.ConfirmPassword">
             </div>
+
             <button type="button" class="btn btn-outline-success btn-lg btn-block" @onclick="HandleValidSubmit">Save User</button>
         </form>
     </div>
-</article>
 

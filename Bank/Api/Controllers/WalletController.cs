@@ -32,15 +32,11 @@ namespace Bank.Api.Controllers
         }
 
         [HttpGet("{walletId}")]
-        public async Task<IActionResult> GetWalletsById(int walletId)
+        public  IActionResult GetWalletsById(int walletId)
         {
             try
             {
-                var wallet = await _walletModel.GetWalletsById(walletId);
-                if (wallet != null)
-                    return Ok(wallet);
-                else
-                    return NotFound();
+                return Ok(_walletModel.GetWalletsById(walletId));
             }
             catch (Exception ex)
             {
@@ -69,40 +65,39 @@ namespace Bank.Api.Controllers
         }
 
         [HttpPut("{walletId}")]
-        public async Task<IActionResult> UpdateWallet(int walletId, [FromBody] Wallet wallet)
+        public  IActionResult UpdateWallet(int walletId, [FromBody] Wallet wallet)
         {
-            try
-            {
-                if (walletId != wallet.WalletId)
-                    return BadRequest("Wallet ID mismatch.");
+            if (wallet == null)
+                return BadRequest();
 
-                var updatedUser = await _walletModel.UpdateWallet(wallet);
-                if (updatedUser != null)
-                    return Ok(updatedUser);
-                else
-                    return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred while updating the user: {ex.Message}");
-            }
+         
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userToUpdate = _walletModel.GetWalletsById(wallet.WalletId);
+
+            if (userToUpdate == null)
+                return NotFound();
+
+            _walletModel.UpdateWallet(wallet);
+
+            return NoContent(); //success
         }
 
         [HttpDelete("{walletId}")]
-        public async Task<IActionResult> DeleteWallet(int walletId)
+        public IActionResult DeleteWallet(int walletId)
         {
-            try
-            {
-                var deletedWallet= await _walletModel.DeleteWallet(walletId);
-                if (deletedWallet != null)
-                    return Ok(deletedWallet);
-                else
-                    return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred while deleting the user: {ex.Message}");
-            }
+            if (walletId == 0)
+                return BadRequest();
+
+            var WalletToDelete = _walletModel.GetWalletsById(walletId);
+            if (WalletToDelete == null)
+                return NotFound();
+
+            _walletModel.DeleteWallet(walletId);
+
+            return NoContent();//success
         }
     }
 }

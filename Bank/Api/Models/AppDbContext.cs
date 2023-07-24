@@ -16,8 +16,9 @@ namespace Bank.Api.Models
 
         public DbSet<Wallet> Wallets { get; set; }
 
-        public DbSet<SymbolAc> SymbolAcs { get; set; }  
+        public DbSet<SymbolAc> SymbolAcs { get; set; }
 
+  
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

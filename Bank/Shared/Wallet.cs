@@ -13,7 +13,7 @@ namespace Bank.Shared
         public string WalletName { get; set; }
         public int? SymbolId { get; set; }
 
-        public User? User { get; set; } 
+        public User? User { get; set; }
         public ICollection<SymbolAc>? SymbolAcs { get; set; }
     }
 }

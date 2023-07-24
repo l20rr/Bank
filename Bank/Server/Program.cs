@@ -1,6 +1,14 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Bank.Server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("BankServerContextConnection") ?? throw new InvalidOperationException("Connection string 'BankServerContextConnection' not found.");
+
+builder.Services.AddDbContext<BankServerContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<BankServerContext>();
 
 // Add services to the container.
 

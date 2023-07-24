@@ -1,0 +1,29 @@
+﻿@page "/wallet"
+@using System.Net.Http
+@using System.Text.Json
+@using Bank.Client.Services
+@inject HttpClient httpClient
+@inject IWalletService WalletService
+@using Bank.Shared
+@inject Blazored.LocalStorage.ILocalStorageService localStore
+
+
+<form Model="@Wallet">
+
+    <input type="text" class="form-control" @bind="@Wallet.WalletName">
+
+    <button type="button" class="btn btn-outline-success btn-lg btn-block" @onclick="Criarcarteira">Save User</button>
+
+</form>
+
+@if (walletToFind != null)
+{
+ 
+    <h1>@walletToFind.WalletName</h1>
+}
+else
+{
+
+    <p>Carteira não encontrada.</p>
+}
+

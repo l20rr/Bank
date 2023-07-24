@@ -10,5 +10,6 @@ namespace Bank.Client.Services
         Task DeleteWallet(int walletId);
 
         Task<IEnumerable<Wallet>> IWalletService();
+     
     }
 }

@@ -14,22 +14,7 @@
     text-decoration:none;
 }
 
-header {
-    height: 7vh;
-    display: flex;
-    justify-content: space-between;
-    width: 80vw;
-    margin: 0 auto;
-}
 
-    header > input, button {
-        height: 30px;
-    }
-
-    header > #search > button {
-        border: none;
-        background-color: #DEA247;
-    }
 
 .action_div {
     height: 7vh;

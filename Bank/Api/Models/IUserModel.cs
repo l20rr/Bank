@@ -9,7 +9,7 @@ namespace Bank.Api.Models
         IEnumerable<User> GetAllUsers();
         User GetUserById(int userId);
         Task<User> AddUser(User user);
-        Task<User> UpdateUser(User user);
-        Task<User>DeleteUser(int userId);
+        User UpdateUser(User user);
+        void DeleteUser(int userId);
     }
 }

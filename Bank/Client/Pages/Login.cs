@@ -13,7 +13,7 @@ namespace Bank.Client.Pages
     public partial class Login
     {
  
-        private int CurrentUserId { get; set; } 
+        public int CurrentUserId { get; set; } 
         private User User { get; set; } = new User();
         [Inject]
         private NavigationManager NavigationManager { get; set; }
@@ -38,9 +38,10 @@ namespace Bank.Client.Pages
             {
                 Console.WriteLine("entrou");
                 CurrentUserId = userToLogin.UserId;
-                Console.WriteLine("CurrentUserId: " + CurrentUserId);
 
-                NavigationManager.NavigateTo("/");
+                await localStore.SetItemAsync("CurrentUserId", CurrentUserId.ToString());
+             
+                NavigationManager.NavigateTo("/", forceLoad: true);
             }
             else
             {

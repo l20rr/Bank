@@ -57,42 +57,43 @@ namespace Bank.Api.Controllers
                 return StatusCode(500, $"An error occurred while adding the user: {ex.Message}");
             }
         }
-
-        [HttpPut("{userId}")]
-        public async Task<IActionResult> UpdateUser(int userId, [FromBody] User user)
+        [HttpPut]
+        public IActionResult UpdateUser([FromBody] User user)
         {
-            try
-            {
-                if (userId != user.UserId)
-                    return BadRequest("User ID mismatch.");
+            if (user == null)
+                return BadRequest();
 
-                var updatedUser = await _userModel.UpdateUser(user);
-                if (updatedUser != null)
-                    return Ok(updatedUser);
-                else
-                    return NotFound();
-            }
-            catch (Exception ex)
+            if (user.FirstName == string.Empty || user.LastName == string.Empty)
             {
-                return StatusCode(500, $"An error occurred while updating the user: {ex.Message}");
+                ModelState.AddModelError("Name/FirstName", "The name or first name shouldn't be empty");
             }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userToUpdate = _userModel.GetUserById(user.UserId);
+
+            if (userToUpdate == null)
+                return NotFound();
+
+            _userModel.UpdateUser(user);
+
+            return NoContent(); //success
         }
 
-        [HttpDelete("{userId}")]
-        public async Task<IActionResult> DeleteUser(int userId)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteEmployee(int id)
         {
-            try
-            {
-                var deletedUser = await _userModel.DeleteUser(userId);
-                if (deletedUser != null)
-                    return Ok(deletedUser);
-                else
-                    return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred while deleting the user: {ex.Message}");
-            }
+            if (id == 0)
+                return BadRequest();
+
+            var employeeToDelete = _userModel.GetUserById(id);
+            if (employeeToDelete == null)
+                return NotFound();
+
+            _userModel.DeleteUser(id);
+
+            return NoContent();//success
         }
     }
 }
