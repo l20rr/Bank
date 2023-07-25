@@ -2,16 +2,22 @@
 using Bank.Shared;
 using Microsoft.AspNetCore.Components;
 using System.Text.Json;
+using System.Linq;
 
 namespace Bank.Client.Pages
 {
     public partial class WalletAc
     {
         private string CurrentUserIdString;
+        private Wallet WalletById;
         private Bank.Shared.Wallet Wallet { get; set; } = new Bank.Shared.Wallet();
-        private Wallet walletToFind;
+        private List<SymbolAc> symbolsWithCurrentUserId = new List<SymbolAc>();
+
         [Inject]
         private NavigationManager NavigationManager { get; set; }
+        [Inject]
+        private ISymbolAcService SymbolAcService { get; set; }
+        private SymbolAc SymbolAc { get; set; } = new SymbolAc();
 
         protected override async Task OnInitializedAsync()
         {
@@ -19,50 +25,20 @@ namespace Bank.Client.Pages
             if (string.IsNullOrEmpty(CurrentUserIdString))
             {
                 NavigationManager.NavigateTo("/Login");
+                return;
             }
 
             if (int.TryParse(CurrentUserIdString, out int currentUserId))
             {
-                var allWallets = await WalletService.GetAllWallets();
+                WalletById = await WalletService.GetWalletId(currentUserId);
 
-                // Find the wallet with LINQ
-                var userIdToFind = currentUserId; // Você pode substituir o valor aqui pelo valor desejado do UserId
-                walletToFind = allWallets.FirstOrDefault(wallet => wallet.UserId == userIdToFind);
+                // Carrega os símbolos com o currentUserId
+                var allSymbols = await SymbolAcService.GetAllSymbols();
+                symbolsWithCurrentUserId = allSymbols.Where(symbol => symbol.WalletId == currentUserId).ToList();
             }
         }
 
-        private async Task Criarcarteira()
-        {
-            if (!string.IsNullOrWhiteSpace(Wallet.WalletName))
-            {
-                // Preencha o UserId da carteira com o valor obtido do localStore (CurrentUserIdString)
-                if (int.TryParse(CurrentUserIdString, out int userId))
-                {
-                    Wallet.UserId = userId;
 
-                    // Chamar o serviço para adicionar a carteira
-                    var response = await WalletService.AddWallet(Wallet);
 
-                    if (response != null)
-                    {
-                        Console.WriteLine("Sucesso: " + JsonSerializer.Serialize(response));
-                        // Você pode adicionar aqui uma mensagem de sucesso ou redirecionar para outra página
-                        // Após adicionar a carteira, você pode atualizar a lista de carteiras exibida na página, se houver uma lista.
-                    }
-                    else
-                    {
-                        Console.WriteLine("Erro: Ocorreu um problema ao criar a carteira.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Erro: O valor de CurrentUserIdString não é válido.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Erro: O nome da carteira não pode ser vazio.");
-            }
-        }
     }
 }

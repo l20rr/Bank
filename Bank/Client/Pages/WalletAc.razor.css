@@ -1,0 +1,36 @@
+﻿.section {
+    background: #292929;
+    backdrop-filter: blur( 15.5px );
+    -webkit-backdrop-filter: blur( 13.5px );
+    border-radius: 10px;
+    border: 3px solid rgba( 255, 255, 255, 0.18 );
+    height: 75vh;
+    width: 80vw;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 3 colunas */
+    grid-template-rows: repeat(3, 1fr); /* 5 filas */
+    gap: 10px; /* Espaçamento entre os itens */
+    padding: 10px; /* Espaçamento interno da seção */
+}
+
+
+
+.itens {
+    background-color: rgba( 255, 255, 255, 0.90 ); /* Cor de fundo dos itens */
+    padding: 1px; /* Espaçamento interno dos itens */
+    text-align: center; /* Centralizar o texto dentro dos itens */
+    border: 1px solid #ddd; /* Borda para destacar os itens */
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+    .itens:hover {
+        background: rgba( 255, 255, 255, 0.70 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.20 );
+        cursor:pointer;
+    }
+   

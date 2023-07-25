@@ -8,7 +8,7 @@ namespace Bank.Client.Services
         Task<Wallet> AddWallet(Wallet wallet);
         Task UpdateWallet(Wallet wallet);
         Task DeleteWallet(int walletId);
-
+        Task<Wallet> GetWalletId(int walletId);
         Task<IEnumerable<Wallet>> IWalletService();
      
     }

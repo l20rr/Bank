@@ -18,35 +18,51 @@ namespace Bank.Client.Pages
         [Inject]
         private NavigationManager NavigationManager { get; set; }
         private bool showError = false;
-     
-     
+
+
         private async Task LoginU()
         {
             if (string.IsNullOrEmpty(User.Email) || string.IsNullOrEmpty(User.UPassword))
             {
                 showError = true;
-               
+                return;
             }
 
-            // Fetch  database
+            // Fetch database
             var allUsers = await UserDataService.GetAllUsers();
 
-            // Find the user with LINQ
-            var userToLogin = allUsers.FirstOrDefault(u => u.Email == User.Email && u.UPassword == User.UPassword);
+            // Find the user with the given email
+            var userToLogin = allUsers.FirstOrDefault(u => u.Email == User.Email);
 
             if (userToLogin != null)
             {
-                Console.WriteLine("entrou");
-                CurrentUserId = userToLogin.UserId;
+                // Verify the password using bcrypt
+                bool isPasswordValid = VerifyPassword(User.UPassword, userToLogin.UPassword);
 
-                await localStore.SetItemAsync("CurrentUserId", CurrentUserId.ToString());
-             
-                NavigationManager.NavigateTo("/", forceLoad: true);
+                if (isPasswordValid)
+                {
+                    Console.WriteLine("entrou");
+                    CurrentUserId = userToLogin.UserId;
+
+                    await localStore.SetItemAsync("CurrentUserId", CurrentUserId.ToString());
+
+                    NavigationManager.NavigateTo("/", forceLoad: true);
+                }
+                else
+                {
+                    showError = true;
+                }
             }
             else
             {
                 showError = true;
             }
+        }
+
+        private bool VerifyPassword(string password, string hashedPassword)
+        {
+            // Verifica se a senha corresponde ao hash
+            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
         }
     }
 }

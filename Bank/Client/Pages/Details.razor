@@ -2,23 +2,23 @@
 @using System.Net.Http
 @using System.Text.Json
 @using System.Linq
-
 <PageTitle>Details</PageTitle>
 
 
 
-
 <div id="cont_info">
+    @if (!showFilteredData)
+    {
         <div class="btns">
-            <button>Maior close</button>
-            <button>Todos os dados</button>
-            <button>Maior Open</button>
-            <button>Mais antiga</button>
-            <button>Mais baixa</button>
+            <button @onclick="FilterByMaiorClose">Maior Close</button>
+            <button @onclick="FilterAllData">Todos os dados</button>
+            <button @onclick="FilterByMaiorOpen">Maior Open</button>
+            <button @onclick="FilterByMaisAntiga">Mais antiga</button>
+            <button @onclick="FilterByMaisBaixa">Mais baixa</button>
         </div>
+    }
 
-
-        @if (datas != null)
+     @if (datas != null)
         {
         @if (datas.Count > 0)
         {
@@ -27,7 +27,7 @@
             <div class="header_info">
                 <h1>@firstData.MetaData.Symbol</h1>
                 <h3>@firstData.MetaData.LastRefreshed</h3>
-                <button type="button" @onclick="() => CheckWallets(firstData.MetaData.Symbol)" style="background-color:#DEA247">Add na carteira</button>
+                <button type="button" @onclick="AddSymbolToWallet" style="background-color:#DEA247">Add na carteira</button>
             </div>
         }
 
@@ -77,7 +77,26 @@
                     <br /> 
                 }
             }
-        }
-    </div>
+     }
+ }
 
+    @if (showFilteredData && filteredData != null && filteredData.Count > 0)
+    {
+        <div class="data-list">
+            @foreach (var kvp in filteredData)
+            {
+                <div class="infos">
+                    <h3>@kvp.Key</h3>
+                    <ul>
+                        <li>Open: @kvp.Value.Open</li>
+                        <li>High: @kvp.Value.High</li>
+                        <li>Low: @kvp.Value.Low</li>
+                        <li>Close: @kvp.Value.Close</li>
+                    </ul>
+                </div>
+                <br />
+            }
+        </div>
+    }
 
+</div>

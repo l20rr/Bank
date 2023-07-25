@@ -37,7 +37,12 @@ namespace Bank.Client.Services
 
         }
 
-       
+        public async Task<Wallet> GetWalletId(int walletId)
+        {
+            return await JsonSerializer.DeserializeAsync<Wallet>
+              (await _httpClient.GetStreamAsync($"api/wallets/{walletId}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+
         public Task<IEnumerable<Wallet>> IWalletService()
         {
             throw new NotImplementedException();

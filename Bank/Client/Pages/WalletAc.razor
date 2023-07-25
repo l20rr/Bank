@@ -8,22 +8,25 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStore
 
 
-<form Model="@Wallet">
 
-    <input type="text" class="form-control" @bind="@Wallet.WalletName">
+<h1>@(WalletById != null ? WalletById.WalletName : "Carteira não encontrada")</h1>
 
-    <button type="button" class="btn btn-outline-success btn-lg btn-block" @onclick="Criarcarteira">Save User</button>
-
-</form>
-
-@if (walletToFind != null)
-{
+<div class="section">
+    
+        @if (symbolsWithCurrentUserId.Any())
+        {
+            @foreach (var symbol in symbolsWithCurrentUserId)
+        {
+            <a class="itens" href=@($"details/{symbol.SymbolName}")>
+                <p>@symbol.SymbolName</p>
+            </a>
+            }
+        }
+        else
+        {
+            <p>Nenhum símbolo encontrado para o usuário atual.</p>
+        }
  
-    <h1>@walletToFind.WalletName</h1>
-}
-else
-{
+</div>
 
-    <p>Carteira não encontrada.</p>
-}
-
+<link href="WalletAc.razor.css" rel="stylesheet" />

@@ -96,46 +96,104 @@ namespace Bank.Client.Pages
             public string Low { get; set; }
             public string Close { get; set; }
         }
-        private Wallet Wallet{ get; set; } = new Wallet();
+
+        private string CurrentUserIdString { get; set; }
+        private SymbolAc SymbolAc { get; set; } = new SymbolAc();
 
         [Inject]
         private IWalletService WalletService { get; set; }
 
         [Inject]
+        private ISymbolAcService SymbolAcService { get; set; }
+
+        [Inject]
         private Blazored.LocalStorage.ILocalStorageService localStore { get; set; }
 
-        private async Task CheckWallets(string symbolName)
+        private async Task GetUserId()
         {
-            var CurrentUserIdString = await localStore.GetItemAsync<string>("CurrentUserId");
-            if (int.TryParse(CurrentUserIdString, out int currentUserId))
-            {
-                var wallets = await WalletService.GetAllWallets();
-                var walletToMatch = wallets.FirstOrDefault(wallet => wallet.UserId == currentUserId);
+            CurrentUserIdString = await localStore.GetItemAsync<string>("CurrentUserId");
+        }
+        public async Task AddSymbolToWallet()
+        {
+            // Fetch the CurrentUserId from localStore
+            await GetUserId();
 
-                if (walletToMatch != null)
+            if (!string.IsNullOrEmpty(CurrentUserIdString))
+            {
+                if (int.TryParse(CurrentUserIdString, out int walletId))
                 {
-                    await AddSymbol(walletToMatch.WalletId, symbolName);
+                    // Use the Symbol property directly as symbolName
+                    string symbolName = Symbol;
+
+                    // Call AddSymbol with walletId and symbolName
+                    await AddSymbolAc(walletId, symbolName);
                 }
                 else
                 {
-                    Console.WriteLine("Não existe uma carteira correspondente ao usuário.");
+                    Console.WriteLine("CurrentUserId is not a valid integer.");
                 }
             }
             else
             {
-                Console.WriteLine("O valor de CurrentUserIdString não é válido.");
+                Console.WriteLine("CurrentUserId is not set.");
             }
         }
-        private async Task AddSymbol(int walletId, string symbolName)
+
+        public async Task AddSymbolAc(int walletId, string symbolName)
         {
-            // Aqui você pode chamar o serviço para adicionar o símbolo à carteira usando o walletId e o symbolName
-            // Exemplo:
-            // var response = await WalletService.AddSymbolToWallet(walletId, symbolName);
-            // Verifique o serviço de carteira para saber como adicionar o símbolo à carteira.
-            Console.WriteLine($"Adicionando o símbolo {symbolName} à carteira com WalletId: {walletId}");
+            SymbolAc.WalletId = walletId;
+            SymbolAc.SymbolName = symbolName;
+
+            var response = await SymbolAcService.AddSymbol(SymbolAc);
+
+           if(response != null) {
+                Console.WriteLine($"Símbolo {symbolName} adicionado com sucesso à carteira com WalletId: {walletId}");
+            }
+          
+        }
+        public Dictionary<string, TimeSeriesItem> dados; // Seus dados originais
+        public List<KeyValuePair<string, TimeSeriesItem>> filteredData;
+        private bool showFilteredData = false;
+
+        private void FilterByMaiorClose()
+        {
+            var maiorClose = dados.Max(item => item.Value.Close);
+            filteredData = dados.Where(item => item.Value.Close == maiorClose).ToList();
+            showFilteredData = true;
         }
 
+        private void FilterAllData()
+        {
+            filteredData = dados.ToList();
+            showFilteredData = true;
+        }
 
+        private void FilterByMaiorOpen()
+        {
+            var maiorOpen = dados.Max(item => item.Value.Open);
+            filteredData = dados.Where(item => item.Value.Open == maiorOpen).ToList();
+            showFilteredData = true;
+        }
+
+        private void FilterByMaisAntiga()
+        {
+            // Implemente aqui a lógica para filtrar os dados por Mais Antiga
+            var maisAntiga = dados.OrderBy(item => item.Key).FirstOrDefault();
+            filteredData = new List<KeyValuePair<string, TimeSeriesItem>> { maisAntiga };
+            showFilteredData = true;
+        }
+
+        private void FilterByMaisBaixa()
+        {
+            var maisBaixa = dados.Min(item => item.Value.Low);
+            filteredData = dados.Where(item => item.Value.Low == maisBaixa).ToList();
+            showFilteredData = true;
+        }
+
+        private void ShowOriginalData()
+        {
+            showFilteredData = false;
+        }
 
     }
 }

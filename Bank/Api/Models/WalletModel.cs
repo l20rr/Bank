@@ -38,7 +38,7 @@ namespace Bank.Api.Models
 
         public Wallet GetWalletsById(int walletId)
         {
-            throw new NotImplementedException();
+            return _appDbContext.Wallets.FirstOrDefault(c => c.WalletId == walletId);
         }
 
         public Wallet UpdateWallet(Wallet wallet)

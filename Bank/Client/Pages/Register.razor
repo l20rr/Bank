@@ -4,38 +4,51 @@
 @using Bank.Client.Services;
 @inject HttpClient httpClient
 @inject IUserDataService UserDataService
-
+@inject IWalletService WalletService
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 @using Bank.Shared
 
 
     <div class="central">
-        <form Model="@User">
-            <h1>Registar</h1>
-            <div class="form-group">
-                <label for="exampleInputName">Nome</label>
-                <input type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="Nome" @bind="@User.FirstName">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your name with anyone else.</small>
+    <form Model="@User">
+        <div class="form-group">
+            <label for="exampleInputName">Nome</label>
+            <input type="text" class="form-control" id="exampleInputName" placeholder="Nome" @bind="@User.FirstName">
+            <small class="text-danger">@firstNameValidationMessage</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputLastName">Apelido</label>
+            <input type="text" class="form-control" id="exampleInputLastName" placeholder="Apelido" @bind="@User.LastName">
+            <small class="text-danger">@lastNameValidationMessage</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" @bind="@User.Email">
+            <small class="text-danger">@emailValidationMessage</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" @bind="@User.UPassword">
+            <small class="text-danger">@passwordValidationMessage</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Repetir Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" @bind="@User.ConfirmPassword">
+            <small class="text-danger">@confirmPasswordValidationMessage</small>
+        </div>
+        <div class="form-group">
+            <label>Nome da carteira</label>
+            <input type="text" class="form-control" placeholder="Wallet name" @bind="@Wallet.WalletName">
+            <small class="text-danger">@walletNameValidationMessage</small>
+        </div>
+        <button type="button" class="btn btn-outline-success btn-lg btn-block" @onclick="HandleValidSubmit">Save User</button>
+        @if (showError)
+        {
+            <div class="alert alert-danger mt-3" role="alert">
+                Por favor, corrija os erros acima antes de enviar o formulário.
             </div>
-            <div class="form-group">
-                <label for="exampleInputLastName">Apelido</label>
-                <input type="text" class="form-control" id="exampleInputLastName" aria-describedby="emailHelp" placeholder="Apelido" @bind="@User.LastName">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your name with anyone else.</small>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" @bind="@User.Email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" @bind="@User.UPassword">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1"> Repetir Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" @bind="@User.ConfirmPassword">
-            </div>
+        }
+    </form>
 
-            <button type="button" class="btn btn-outline-success btn-lg btn-block" @onclick="HandleValidSubmit">Save User</button>
-        </form>
     </div>
 
