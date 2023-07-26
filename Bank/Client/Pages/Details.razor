@@ -1,4 +1,5 @@
 ﻿@page "/Details/{Symbol}"
+
 @using System.Net.Http
 @using System.Text.Json
 @using System.Linq
@@ -7,6 +8,10 @@
 
 
 <div id="cont_info">
+    <div  id="searchD">
+        <input type="text" @bind="Symbol" placeholder="GOOG" />
+        <button @onclick="Search">Pesquisar</button>
+    </div>
     @if (!showFilteredData)
     {
         <div class="btns">
@@ -27,10 +32,17 @@
             <div class="header_info">
                 <h1>@firstData.MetaData.Symbol</h1>
                 <h3>@firstData.MetaData.LastRefreshed</h3>
-                <button type="button" @onclick="AddSymbolToWallet" style="background-color:#DEA247">Add na carteira</button>
+                <button type="button" @onclick="AddSymbolToWallet" style="background-color:#DEA247">Adicionar na carteira</button>
             </div>
         }
+        <div id="SaveDetails">
+            @if(saveAc == true)
+            {
+                <h3>Salvo</h3>
+            }
+            
 
+        </div>
             @if (datas.Count > 12)
             {
                 @foreach (var data in datas.Take(12))

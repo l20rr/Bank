@@ -111,7 +111,7 @@ form > .form-group {
 form > button {
         margin: 20px;
      
-        height: 20%;
+        height: 5vh;
     }
 
 .central {
@@ -146,3 +146,43 @@ header {
         text-decoration:none;
         color: #fff;
     }
+
+#SearchT{
+    display:none;
+}
+
+@media (max-width: 768px) {
+    form{
+     width:95vw;
+ }
+    header {
+        height: 7vh;
+        display: flex;
+        justify-content: space-between;
+        width: 70vw;
+        margin: 0 auto;
+    }
+
+        header > input, button {
+            height: 30px;
+           
+            border: none;
+            background-color: #DEA247;
+        }
+    #search > #btn-sh {
+        display: none;
+    }
+
+        header > #search > button {
+            border: none;
+            background-color: #DEA247;
+        }
+    #search > input {
+        display: none;
+    }
+
+    #SearchT {
+        display: flex;
+    }
+
+}

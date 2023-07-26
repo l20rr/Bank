@@ -39,7 +39,8 @@ namespace Bank.Client.Pages
         }
         private async Task FetchData()
         {
-            string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol={Symbol}&apikey=SGIYAYJ5YOITH6Q6";
+            //string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol={Symbol}&apikey=SGIYAYJ5YOITH6Q6";
+            string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol={Symbol}&apikey=NZWQHLKWKIOXGT5K";
             Uri queryUri = new Uri(QUERY_URL);
 
             var response = await HttpClient.GetStringAsync(queryUri);
@@ -113,9 +114,11 @@ namespace Bank.Client.Pages
         {
             CurrentUserIdString = await localStore.GetItemAsync<string>("CurrentUserId");
         }
+
+        private bool saveAc ;
         public async Task AddSymbolToWallet()
         {
-            // Fetch the CurrentUserId from localStore
+            // Fetch  CurrentUserId  localStore
             await GetUserId();
 
             if (!string.IsNullOrEmpty(CurrentUserIdString))
@@ -127,6 +130,7 @@ namespace Bank.Client.Pages
 
                     // Call AddSymbol with walletId and symbolName
                     await AddSymbolAc(walletId, symbolName);
+                    
                 }
                 else
                 {
@@ -135,7 +139,7 @@ namespace Bank.Client.Pages
             }
             else
             {
-                Console.WriteLine("CurrentUserId is not set.");
+                NavigationManager.NavigateTo("/Login");
             }
         }
 
@@ -143,15 +147,25 @@ namespace Bank.Client.Pages
         {
             SymbolAc.WalletId = walletId;
             SymbolAc.SymbolName = symbolName;
+            var symbols = await SymbolAcService.GetAllSymbols();
+            var symbolExists = symbols.Any(s => s.WalletId == walletId && s.SymbolName == symbolName);
 
-            var response = await SymbolAcService.AddSymbol(SymbolAc);
-
-           if(response != null) {
-                Console.WriteLine($"Símbolo {symbolName} adicionado com sucesso à carteira com WalletId: {walletId}");
+            if (!symbolExists)
+            {
+                var response = await SymbolAcService.AddSymbol(SymbolAc);
+                if (response != null)
+                {
+                    saveAc = true;
+                }
             }
-          
+            else
+            {
+                saveAc = false;
+            }
         }
-        public Dictionary<string, TimeSeriesItem> dados; // Seus dados originais
+
+    
+        public Dictionary<string, TimeSeriesItem> dados; //dados originais
         public List<KeyValuePair<string, TimeSeriesItem>> filteredData;
         private bool showFilteredData = false;
 
@@ -177,7 +191,7 @@ namespace Bank.Client.Pages
 
         private void FilterByMaisAntiga()
         {
-            // Implemente aqui a lógica para filtrar os dados por Mais Antiga
+            
             var maisAntiga = dados.OrderBy(item => item.Key).FirstOrDefault();
             filteredData = new List<KeyValuePair<string, TimeSeriesItem>> { maisAntiga };
             showFilteredData = true;

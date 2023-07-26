@@ -65,18 +65,20 @@ namespace Bank.Client.Pages
                 {
                     foreach (var symbol in symbolsNameId)
                     {
-                        // Supondo que o método DeleteSymbol aceita um ID inteiro para deletar o símbolo
+                        // DeleteSymbol aceita um ID inteiro para deletar o símbolo
                         SymbolAcService.DeleteSymbol(symbol.SymbolId);
                     }
+                    NavigationManager.NavigateTo("/wallet", forceLoad: true);
                 }
              
             }
-            NavigationManager.NavigateTo("/wallet");
+        
         }
 
         private void EditAc()
         {
-            EditAcs = true;
+            EditAcs = !EditAcs;
+
         }
 
     }

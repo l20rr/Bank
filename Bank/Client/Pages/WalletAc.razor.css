@@ -12,12 +12,14 @@
     grid-template-rows: repeat(3, 1fr); /* 5 filas */
     gap: 10px; /* Espaçamento entre os itens */
     padding: 10px; /* Espaçamento interno da seção */
+
+    overflow-y: auto;
 }
 
 
 
 .itens {
-    background-color: rgba( 255, 255, 255, 0.90 ); /* Cor de fundo dos itens */
+    background-color: rgba( 255, 255, 255, 0.90 ); 
 
     text-align: center; /* Centralizar o texto dentro dos itens */
     border: 1px solid #ddd; /* Borda para destacar os itens */
@@ -41,9 +43,32 @@
 
 #del {
  
-    height: 10vh;
+    height: 9vh;
     width: 15vw;
 
     display: flex;
     justify-content: flex-end;
+}
+
+
+@media (max-width: 768px) {
+    .section {
+      
+        width: 90vw;
+      
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 3 colunas */
+        grid-template-rows: repeat(4, 1fr); /* 5 filas */
+        gap: 5px; 
+        padding: 5px; 
+    }
+    #del {
+ 
+        height: 8vh;
+        width: 15vw;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+  
 }

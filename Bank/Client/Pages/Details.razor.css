@@ -1,35 +1,39 @@
-﻿#cont_info{
+﻿
+#cont_info{
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items: center;
+
+  
 }
 
 .btns {
-    width: 100vw;
+    width: 80vw;
     height: 5vh;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px;
+
 }
 
     .btns > button {
         margin: 30px;
         width: 150px;
-        height: 30px;
+        height: auto;
         border: none;
         border-radius: 10px;
         background-color: #DEA247;
     }
-.header_info{
-    display:flex;
+.header_info {
+    display: flex;
     width: 40vw;
-    height:10vh;
-   
+    height: 10vh;
     justify-content: space-between;
-    align-items:center;
-    margin:20px;
+    align-items: center;
+    margin: 20px;
+ 
 }
 
 .infos {
@@ -54,3 +58,36 @@
         align-items: center;
         width: 50vw;
     }
+
+#SaveDetails {
+   
+    width: 35vw;
+    height: 5vh;
+    color: green;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#searchD {
+    display: none;
+}
+@media (max-width: 768px) {
+   *{
+       font-size:0.9rem;
+   }
+
+    .header_info {
+        width: 80vw; 
+        height: 8vh; 
+        margin: 10px;
+    }
+
+    #searchD {
+        display: flex;
+        margin:20px;
+    }
+    .btns>button{
+        margin:7px;
+        height:auto;
+    }
+}
