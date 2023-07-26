@@ -12,8 +12,7 @@
         <input type="text" @bind="Symbol" placeholder="GOOG" />
         <button @onclick="Search">Pesquisar</button>
     </div>
-    @if (!showFilteredData)
-    {
+
         <div class="btns">
             <button @onclick="FilterByMaiorClose">Maior Close</button>
             <button @onclick="FilterAllData">Todos os dados</button>
@@ -21,7 +20,8 @@
             <button @onclick="FilterByMaisAntiga">Mais antiga</button>
             <button @onclick="FilterByMaisBaixa">Mais baixa</button>
         </div>
-    }
+   
+     
 
      @if (datas != null)
         {
@@ -43,6 +43,8 @@
             
 
         </div>
+        @if (!showFilteredData)
+        {
             @if (datas.Count > 12)
             {
                 @foreach (var data in datas.Take(12))
@@ -90,9 +92,9 @@
                 }
             }
      }
- 
+    }
 
-    @if (showFilteredData && filteredData != null && filteredData.Count > 0)
+    @if (showFilteredData && filteredData != null && filteredData.Any())
     {
         <div class="data-list">
             @foreach (var kvp in filteredData)
@@ -110,5 +112,6 @@
             }
         </div>
     }
+
 
 </div>

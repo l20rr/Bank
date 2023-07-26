@@ -2,6 +2,8 @@
 using Bank.Shared;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection.Metadata;
 using System.Text.Json;
@@ -17,17 +19,19 @@ namespace Bank.Client.Pages
         [Inject]
         private NavigationManager NavigationManager { get; set; }
 
+   
         [Parameter]
         public string Symbol { get; set; }
 
+        private List<Data> datas;
+        private IEnumerable<KeyValuePair<string, TimeSeriesItem>> filteredData = Enumerable.Empty<KeyValuePair<string, TimeSeriesItem>>();
+        private bool showFilteredData = false;
         private async Task Search()
         {
             NavigationManager.NavigateTo($"/Details/{Symbol}");
             await FetchData();
         }
 
-
-        private List<Data> datas;
         protected override async Task OnInitializedAsync()
         {
             await FetchData();
@@ -39,14 +43,16 @@ namespace Bank.Client.Pages
         }
         private async Task FetchData()
         {
-            //string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol={Symbol}&apikey=SGIYAYJ5YOITH6Q6";
-            string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol={Symbol}&apikey=NZWQHLKWKIOXGT5K";
+            
+            string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=IBM&apikey=demo";
             Uri queryUri = new Uri(QUERY_URL);
 
             var response = await HttpClient.GetStringAsync(queryUri);
             var jsonDocument = JsonDocument.Parse(response);
 
             datas = new List<Data>();
+
+            dados = new Dictionary<string, TimeSeriesItem>();
 
             foreach (var timeSeries in jsonDocument.RootElement.GetProperty("Monthly Adjusted Time Series").EnumerateObject())
             {
@@ -62,6 +68,7 @@ namespace Bank.Client.Pages
 
                 var time = timeSeries.Name;
                 var values = timeSeries.Value;
+              
 
                 var timeSeriesItem = new TimeSeriesItem
                 {
@@ -74,7 +81,7 @@ namespace Bank.Client.Pages
                 data.TimeSeries.Add(time, timeSeriesItem);
                 datas.Add(data);
             }
-
+            filteredData = dados;
             NavigationManager.NavigateTo($"/Details/{Symbol}");
         }
 
@@ -116,6 +123,8 @@ namespace Bank.Client.Pages
         }
 
         private bool saveAc ;
+        private IEnumerable<KeyValuePair<string, TimeSeriesItem>> dados;
+
         public async Task AddSymbolToWallet()
         {
             // Fetch  CurrentUserId  localStore
@@ -164,50 +173,69 @@ namespace Bank.Client.Pages
             }
         }
 
-    
-        public Dictionary<string, TimeSeriesItem> dados; //dados originais
-        public List<KeyValuePair<string, TimeSeriesItem>> filteredData;
-        private bool showFilteredData = false;
 
-        private void FilterByMaiorClose()
-        {
-            var maiorClose = dados.Max(item => item.Value.Close);
-            filteredData = dados.Where(item => item.Value.Close == maiorClose).ToList();
-            showFilteredData = true;
-        }
+
 
         private void FilterAllData()
         {
-            filteredData = dados.ToList();
+            filteredData = datas.SelectMany(data => data.TimeSeries);
+            showFilteredData = true;
+        }
+
+        private void FilterBy(Func<TimeSeriesItem, decimal> selector)
+        {
+            var maxValue = datas.Max(data => data.TimeSeries.Max(item =>
+            {
+                decimal value;
+                return decimal.TryParse(selector(item.Value).ToString(), out value) ? value : decimal.MinValue;
+            }));
+
+            filteredData = datas.SelectMany(data => data.TimeSeries)
+                                .Where(item =>
+                                {
+                                    decimal value;
+                                    return decimal.TryParse(selector(item.Value).ToString(), out value) && value == maxValue;
+                                });
+
+            showFilteredData = true;
+        }
+
+
+
+        private void FilterByMaiorClose()
+        {
+            filteredData = datas.SelectMany(data => data.TimeSeries)
+                                .OrderByDescending(item => decimal.Parse(item.Value.Close, CultureInfo.InvariantCulture))
+                                .Take(1);
             showFilteredData = true;
         }
 
         private void FilterByMaiorOpen()
         {
-            var maiorOpen = dados.Max(item => item.Value.Open);
-            filteredData = dados.Where(item => item.Value.Open == maiorOpen).ToList();
+            filteredData = datas.SelectMany(data => data.TimeSeries)
+                                .OrderByDescending(item => decimal.Parse(item.Value.Open, CultureInfo.InvariantCulture))
+                                .Take(1);
             showFilteredData = true;
         }
+
 
         private void FilterByMaisAntiga()
         {
-            
-            var maisAntiga = dados.OrderBy(item => item.Key).FirstOrDefault();
-            filteredData = new List<KeyValuePair<string, TimeSeriesItem>> { maisAntiga };
+            filteredData = datas.SelectMany(data => data.TimeSeries)
+                                .OrderBy(item => DateTime.Parse(item.Key))
+                                .Take(1);
             showFilteredData = true;
         }
+
 
         private void FilterByMaisBaixa()
         {
-            var maisBaixa = dados.Min(item => item.Value.Low);
-            filteredData = dados.Where(item => item.Value.Low == maisBaixa).ToList();
+            filteredData = datas.SelectMany(data => data.TimeSeries)
+                                .OrderBy(item => decimal.Parse(item.Value.Low, CultureInfo.InvariantCulture))
+                                .Take(1);
             showFilteredData = true;
         }
 
-        private void ShowOriginalData()
-        {
-            showFilteredData = false;
-        }
 
     }
 }
