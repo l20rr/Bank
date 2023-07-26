@@ -53,23 +53,23 @@ namespace Bank.Api.Controllers
             {
                 if (string.IsNullOrEmpty(user.UPassword) || string.IsNullOrEmpty(user.ConfirmPassword))
                 {
-                    // Verifique se a senha e a confirmação de senha foram fornecidas
+                    
                     return BadRequest("Password and Confirm Password are required.");
                 }
 
                 if (user.UPassword != user.ConfirmPassword)
                 {
-                    // Verifique se a senha e a confirmação de senha correspondem
+                   
                     return BadRequest("Password and Confirm Password do not match.");
                 }
 
                 // Gera o hash da senha usando bcrypt
                 string hashedPassword = HashPassword(user.UPassword);
-                user.UPassword = hashedPassword; // Atualiza a senha com o valor hash antes de adicioná-la ao banco de dados
+                user.UPassword = hashedPassword;
 
                 // Gera o hash da confirmação de senha usando bcrypt (mesmo salt usado para a senha principal)
                 string hashedConfirmPassword = HashPassword(user.ConfirmPassword);
-                user.ConfirmPassword = hashedConfirmPassword; // Atualiza a confirmação de senha com o valor hash
+                user.ConfirmPassword = hashedConfirmPassword; 
 
                 var newUser = await _userModel.AddUser(user);
                 return CreatedAtAction(nameof(GetUserById), new { userId = newUser.UserId }, newUser);
@@ -82,10 +82,10 @@ namespace Bank.Api.Controllers
 
         private string HashPassword(string password)
         {
-            // Define o trabalho (complexidade) do bcrypt
-            int workFactor = 10; // Pode ser ajustado conforme necessário
+            
+            int workFactor = 10; 
 
-            // Gera o salt aleatório
+            // Gera o salt 
             string salt = BCrypt.Net.BCrypt.GenerateSalt(workFactor);
 
             // Gera o hash da senha com o salt
@@ -113,11 +113,25 @@ namespace Bank.Api.Controllers
             if (userToUpdate == null)
                 return NotFound();
 
-            _userModel.UpdateUser(user);
+            userToUpdate.FirstName = user.FirstName;
+            userToUpdate.LastName = user.LastName;
 
-            return NoContent(); //success
+            if (!string.IsNullOrEmpty(user.UPassword) && !string.IsNullOrEmpty(user.ConfirmPassword))
+            {
+                if (user.UPassword != user.ConfirmPassword)
+                {
+                    return BadRequest("Password and Confirm Password do not match.");
+                }
+
+                // Gera o hash da nova senha usando bcrypt
+                string hashedPassword = HashPassword(user.UPassword);
+                userToUpdate.UPassword = hashedPassword; 
+            }
+
+            _userModel.UpdateUser(userToUpdate);
+
+            return NoContent(); 
         }
-
         [HttpDelete("{id}")]
         public IActionResult DeleteEmployee(int id)
         {
@@ -130,7 +144,7 @@ namespace Bank.Api.Controllers
 
             _userModel.DeleteUser(id);
 
-            return NoContent();//success
+            return NoContent();
         }
     }
 }

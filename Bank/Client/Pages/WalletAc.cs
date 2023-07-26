@@ -9,15 +9,17 @@ namespace Bank.Client.Pages
     public partial class WalletAc
     {
         private string CurrentUserIdString;
-        private Wallet WalletById;
+        public Wallet WalletById;
+        public string Symbol;
         private Bank.Shared.Wallet Wallet { get; set; } = new Bank.Shared.Wallet();
-        private List<SymbolAc> symbolsWithCurrentUserId = new List<SymbolAc>();
+        public List<SymbolAc> symbolsWithCurrentUserId = new List<SymbolAc>();
 
+        public bool EditAcs = false;
         [Inject]
         private NavigationManager NavigationManager { get; set; }
         [Inject]
-        private ISymbolAcService SymbolAcService { get; set; }
-        private SymbolAc SymbolAc { get; set; } = new SymbolAc();
+        public ISymbolAcService SymbolAcService { get; set; }
+        public SymbolAc SymbolAc { get; set; } = new SymbolAc();
 
         protected override async Task OnInitializedAsync()
         {
@@ -39,6 +41,43 @@ namespace Bank.Client.Pages
         }
 
 
+
+        private async Task deleteSymbol(string SymbolName)
+        {
+            CurrentUserIdString = await localStore.GetItemAsync<string>("CurrentUserId");
+            if (string.IsNullOrEmpty(CurrentUserIdString))
+            {
+                NavigationManager.NavigateTo("/Login");
+                return;
+            }
+
+            if (int.TryParse(CurrentUserIdString, out int currentUserId))
+            {
+                WalletById = await WalletService.GetWalletId(currentUserId);
+
+                // Carrega os símbolos com o currentUserId
+                var allSymbols = await SymbolAcService.GetAllSymbols();
+
+                // Filtra os símbolos com base no currentUserId e SymbolName
+                var symbolsNameId = allSymbols.Where(symbol => symbol.WalletId == currentUserId && symbol.SymbolName == SymbolName).ToList();
+
+                if (symbolsNameId.Any())
+                {
+                    foreach (var symbol in symbolsNameId)
+                    {
+                        // Supondo que o método DeleteSymbol aceita um ID inteiro para deletar o símbolo
+                        SymbolAcService.DeleteSymbol(symbol.SymbolId);
+                    }
+                }
+             
+            }
+            NavigationManager.NavigateTo("/wallet");
+        }
+
+        private void EditAc()
+        {
+            EditAcs = true;
+        }
 
     }
 }

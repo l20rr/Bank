@@ -18,19 +18,32 @@
 
 .itens {
     background-color: rgba( 255, 255, 255, 0.90 ); /* Cor de fundo dos itens */
-    padding: 1px; /* Espaçamento interno dos itens */
+
     text-align: center; /* Centralizar o texto dentro dos itens */
     border: 1px solid #ddd; /* Borda para destacar os itens */
     color: black;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
+    flex-direction:column-reverse;
+    text-decoration:none;
 }
 
-
-    .itens:hover {
-        background: rgba( 255, 255, 255, 0.70 );
-        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.20 );
-        cursor:pointer;
+    .itens > a {
+        text-decoration: none;
+        color: #000;
     }
-   
+    .itens:hover {
+        background:rgba( 255, 255, 255, 0.90 );
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+        cursor: pointer;
+    }
+
+#del {
+ 
+    height: 10vh;
+    width: 15vw;
+
+    display: flex;
+    justify-content: flex-end;
+}

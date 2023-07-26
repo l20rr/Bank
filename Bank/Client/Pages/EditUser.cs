@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Bank.Client.Pages
@@ -23,6 +24,15 @@ namespace Bank.Client.Pages
 
         private string CurrentUserIdString;
 
+
+        private string firstNameValidationMessage = string.Empty;
+        private string lastNameValidationMessage = string.Empty;
+        private string emailValidationMessage = string.Empty;
+        private string passwordValidationMessage = string.Empty;
+        private string confirmPasswordValidationMessage = string.Empty;
+  
+        private bool showError = false;
+
         protected async override Task OnInitializedAsync()
         {
             CurrentUserIdString = await localStore.GetItemAsync<string>("CurrentUserId");
@@ -38,16 +48,35 @@ namespace Bank.Client.Pages
 
         private async Task Edit()
         {
+            bool isFirstNameValid = ValidateFirstName();
+            bool isLastNameValid = ValidateLastName();
+            bool isEmailValid = ValidateEmail();
+            bool isPasswordValid = ValidatePassword();
+            bool isConfirmPasswordValid = ValidateConfirmPassword();
+       
+
+
+            if (isFirstNameValid && isLastNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid )
+            {
+              
+                showError = false;
+               
+            }
+            else
+            {
+               
+                showError = true;
+            }
             try
             {
-                // Chamada assíncrona do serviço IUserService para atualizar o usuário
+              
                 var response =  UserDataService.UpdateUser(User);
 
                 if (response != null)
                 {
                     Console.WriteLine("Sucesso: " + JsonSerializer.Serialize(response));
 
-                    // Navegação para a página de perfil do usuário editado
+              
                     NavigationManager.NavigateTo("/profile", forceLoad: true);
                 }
                 else
@@ -58,6 +87,89 @@ namespace Bank.Client.Pages
             catch (Exception ex)
             {
                 Console.WriteLine("Erro: " + ex.Message);
+            }
+
+        
+        }
+
+        public bool ValidateFirstName()
+        {
+           
+            if (string.IsNullOrEmpty(User.FirstName) || !char.IsUpper(User.FirstName[0]))
+            {
+                firstNameValidationMessage = "Insira o primeiro nome corretamente (deve iniciar com letra maiúscula).";
+                return false;
+            }
+            else
+            {
+                firstNameValidationMessage = string.Empty;
+                return true;
+            }
+        }
+
+        public bool ValidateLastName()
+        {
+           
+            if (string.IsNullOrEmpty(User.LastName) || !char.IsUpper(User.LastName[0]))
+            {
+                lastNameValidationMessage = "Insira o último nome corretamente (deve iniciar com letra maiúscula).";
+                return false;
+            }
+            else
+            {
+                lastNameValidationMessage = string.Empty;
+                return true;
+            }
+        }
+
+        private bool ValidateEmail()
+        {
+            // Expressão regular para validar o formato do email
+            string emailPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+            bool isEmailValid = Regex.IsMatch(User.Email, emailPattern);
+
+            if (!isEmailValid)
+            {
+                emailValidationMessage = "Digite um email válido.";
+            }
+            else
+            {
+                emailValidationMessage = string.Empty;
+            }
+
+            return isEmailValid;
+        }
+
+        private bool ValidatePassword()
+        {
+            
+            string passwordPattern = @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$";
+            bool isPasswordValid = Regex.IsMatch(User.UPassword, passwordPattern);
+
+            if (!isPasswordValid)
+            {
+                passwordValidationMessage = "A senha precisa de 6 caracteres, pelo menos 1 letra, 1 número e 2 caracteres especiais.";
+                return false;
+            }
+            else
+            {
+                passwordValidationMessage = string.Empty;
+                return true;
+            }
+        }
+
+        private bool ValidateConfirmPassword()
+        {
+            
+            if (User.UPassword != User.ConfirmPassword)
+            {
+                confirmPasswordValidationMessage = "As senhas não coincidem.";
+                return false;
+            }
+            else
+            {
+                confirmPasswordValidationMessage = string.Empty;
+                return true;
             }
         }
 

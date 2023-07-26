@@ -25,7 +25,7 @@ namespace Bank.Client.Services
 
         public async Task DeleteSymbol(int symbolId)
         {
-            await _httpClient.DeleteAsync($"api/wallets/{symbolId}");
+            await _httpClient.DeleteAsync($"api/symbols/{symbolId}");
         }
 
         public async Task<IEnumerable<SymbolAc>> GetAllSymbols()

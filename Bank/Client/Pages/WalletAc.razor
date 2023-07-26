@@ -8,8 +8,11 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStore
 
 
+<div class="d-flex justify-content-between align-items-lg-center">
 
-<h1>@(WalletById != null ? WalletById.WalletName : "Carteira não encontrada")</h1>
+    <h1>@(WalletById != null ? WalletById.WalletName : "Carteira não encontrada")</h1>
+    <button @onclick="EditAc" class="btn btn-outline-warning">edit</button>
+</div>
 
 <div class="section">
     
@@ -17,9 +20,20 @@
         {
             @foreach (var symbol in symbolsWithCurrentUserId)
         {
-            <a class="itens" href=@($"details/{symbol.SymbolName}")>
-                <p>@symbol.SymbolName</p>
-            </a>
+    
+            <div  class="itens">
+                 <a   href=@($"details/{symbol.SymbolName}")>@symbol.SymbolName</a>
+                <div id="del">
+                @if (EditAcs == true)
+                {
+                 
+                        <button class="btn btn-danger" @onclick="()=>  deleteSymbol(symbol.SymbolName)">
+                            Del
+                        </button>
+                  
+                }
+                </div>
+            </div>
             }
         }
         else
