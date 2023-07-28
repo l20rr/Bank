@@ -52,7 +52,7 @@
 
  
 
-    #dados {
+    .dados {
         display: flex;
         justify-content: center;
         align-items: center;

@@ -8,6 +8,7 @@ namespace Bank.Client.Services
 {
     public interface IUserDataService
     {
+        Task<HttpResponseMessage> PostAsJsonAsync<T>(string requestUri, T value);
         Task<IEnumerable<User>> GetAllUsers();
 
         Task<User> GetUserId(int userId);

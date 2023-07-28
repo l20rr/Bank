@@ -15,7 +15,7 @@
 
         <div class="btns">
             <button @onclick="FilterByMaiorClose">Maior Close</button>
-            <button @onclick="FilterAllData">Todos os dados</button>
+            <button @onclick="FilterAllData">Todos dados</button>
             <button @onclick="FilterByMaiorOpen">Maior Open</button>
             <button @onclick="FilterByMaisAntiga">Mais antiga</button>
             <button @onclick="FilterByMaisBaixa">Mais baixa</button>
@@ -55,7 +55,7 @@
                             <div id="titulo">
                                 <h3>@item.Key</h3>
                             </div>
-                            <div id="dados">
+                            <div class="dados">
                                 <ul>
                                     <li>Open: @item.Value.Open</li>
                                     <li>High: @item.Value.High</li>
@@ -78,7 +78,7 @@
                             <div id="titulo">
                                 <h3>@item.Key</h3>
                             </div>
-                            <div id="dados">
+                            <div class="dados">
                                 <ul>
                                     <li>Open: @item.Value.Open</li>
                                     <li>High: @item.Value.High</li>
@@ -97,10 +97,17 @@
     @if (showFilteredData && filteredData != null && filteredData.Any())
     {
         <div class="data-list">
+            <div class="header_info">
+                <h4>Dados pedidos:</h4>
+            <button class="btn btn-dark" @onclick="OriginData">Voltar</button>
+            </div>
             @foreach (var kvp in filteredData)
             {
-                <div class="infos">
+                <div id="titulo">
                     <h3>@kvp.Key</h3>
+                </div>
+                <div class="dados">
+                 
                     <ul>
                         <li>Open: @kvp.Value.Open</li>
                         <li>High: @kvp.Value.High</li>

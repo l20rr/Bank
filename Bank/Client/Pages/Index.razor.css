@@ -1,13 +1,25 @@
 ﻿
+#sectionGeral {
+    width: 80vw;
+    height: 85vh;
+   flex-direction:column;
+    display:flex;
+    justify-content:center;
+   
+}
+
 .section {
     background: rgba( 255, 255, 255, 0.90 );
     backdrop-filter: blur( 15.5px );
     -webkit-backdrop-filter: blur( 13.5px );
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
-    height: 75vh;
     width: 80vw;
-    border-radius: 10px;
+    height: 70vh;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
 }
 
 .section > a {
@@ -18,7 +30,8 @@
 
 .action_div {
     height: 7vh;
-    margin: 50px;
+    width:70vw;
+    margin: 20px;
   color: black;
   display:flex;
   justify-content:center;

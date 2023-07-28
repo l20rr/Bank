@@ -13,6 +13,7 @@
                 Menu
             </button>
             <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="@GetHome()">Home</a></li>
                 <li><a class="dropdown-item" href="@GetProfileLink()">Perfil</a></li>
                 <li id="SearchT"><a class="dropdown-item" href="@GetSearchLink()">Pesquisar</a></li>
                 <li><a class="dropdown-item" href="@GetWalletLink()">Carteira</a></li>
@@ -49,6 +50,7 @@
     private string GetProfileLink() => $"/profile";
     private string GetWalletLink() => $"/wallet";
     private string GetSearchLink() => $"/Details/GOOG";
+    private string GetHome() => "/";
     private async Task Logout()
     {
         await localStore.RemoveItemAsync("CurrentUserId");

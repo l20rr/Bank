@@ -43,7 +43,8 @@ namespace Bank.Client.Pages
         }
         private async Task FetchData()
         {
-            
+            //string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol={Symbol}&apikey=SGIYAYJ5YOITH6Q6";
+            //string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol={Symbol}&apikey=NZWQHLKWKIOXGT5K";
             string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=IBM&apikey=demo";
             Uri queryUri = new Uri(QUERY_URL);
 
@@ -236,6 +237,9 @@ namespace Bank.Client.Pages
             showFilteredData = true;
         }
 
-
+        private void OriginData()
+        {
+            showFilteredData = false;
+        }
     }
 }

@@ -33,9 +33,13 @@ namespace Bank.Client.Pages
 
             if (isFirstNameValid && isLastNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid && isWalletNameValid)
             {
-                // Todos os campos são válidos, continua com o salvamento do usuário e da carteira
+                
                 showError = false;
-                // Implementar a lógica para salvar o usuário e a carteira aqui
+              var response = await UserDataService.AddUser(User);
+                await localStorage.SetItemAsync("CurrentUserId", response.UserId);
+                await Criarcarteira(response.UserId);
+                Console.WriteLine("Sucesso: " + JsonSerializer.Serialize(response));
+                NavigationManager.NavigateTo("/", forceLoad: true);
             }
             else
             {
@@ -43,30 +47,24 @@ namespace Bank.Client.Pages
                 showError = true;
             }
 
-            // Chamada do serviço IUserService para adicionar o usuário
-            var response = await UserDataService.AddUser(User);
-
-            if (response != null)
+        }
+        private string GetRegStyle()
+        {
+            
+            if (showError == true)
             {
-                await localStorage.SetItemAsync("currentUserId", response.UserId);
-                await Criarcarteira(response.UserId);
-                Console.WriteLine("Sucesso: " + JsonSerializer.Serialize(response));
-                NavigationManager.NavigateTo("/", forceLoad: true);
-
+                return "error-mode"; 
             }
             else
             {
-                Console.WriteLine("Erro: Ocorreu um problema ao salvar o usuário.");
+                return "base-style"; 
             }
-        
         }
 
 
         private bool ValidateFirstName()
         {
-            // Implemente a lógica para validar o primeiro nome (se necessário)
-            // Retorna true se for válido, caso contrário, atualiza a mensagem de erro e retorna false
-            // Exemplo:
+           
             if (string.IsNullOrEmpty(User.FirstName) || !char.IsUpper(User.FirstName[0]))
             {
                 firstNameValidationMessage = "Insira o primeiro nome corretamente (deve iniciar com letra maiúscula).";
@@ -81,9 +79,7 @@ namespace Bank.Client.Pages
 
         private bool ValidateLastName()
         {
-            // Implemente a lógica para validar o último nome (se necessário)
-            // Retorna true se for válido, caso contrário, atualiza a mensagem de erro e retorna false
-            // Exemplo:
+         
             if (string.IsNullOrEmpty(User.LastName) || !char.IsUpper(User.LastName[0]))
             {
                 lastNameValidationMessage = "Insira o último nome corretamente (deve iniciar com letra maiúscula).";
@@ -116,9 +112,7 @@ namespace Bank.Client.Pages
 
         private bool ValidatePassword()
         {
-            // Implemente a lógica para validar a senha (se necessário)
-            // Retorna true se for válida, caso contrário, atualiza a mensagem de erro e retorna false
-            // Exemplo:
+         
             string passwordPattern = @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$";
             bool isPasswordValid = Regex.IsMatch(User.UPassword, passwordPattern);
 
@@ -136,9 +130,7 @@ namespace Bank.Client.Pages
 
         private bool ValidateConfirmPassword()
         {
-            // Implemente a lógica para validar a confirmação da senha (se necessário)
-            // Retorna true se for válida, caso contrário, atualiza a mensagem de erro e retorna false
-            // Exemplo:
+            
             if (User.UPassword != User.ConfirmPassword)
             {
                 confirmPasswordValidationMessage = "As senhas não coincidem.";
@@ -153,9 +145,7 @@ namespace Bank.Client.Pages
 
         private bool ValidateWalletName()
         {
-            // Implemente a lógica para validar o nome da carteira (se necessário)
-            // Retorna true se for válido, caso contrário, atualiza a mensagem de erro e retorna false
-            // Exemplo:
+            
             if (string.IsNullOrEmpty(Wallet.WalletName))
             {
                 walletNameValidationMessage = "O nome da carteira não pode ser vazio.";
@@ -172,10 +162,10 @@ namespace Bank.Client.Pages
  
             if (!string.IsNullOrWhiteSpace(Wallet.WalletName))
             {
-                // Preencha o UserId da carteira com o valor obtido do parâmetro (userId)
+                
                 Wallet.UserId = userId;
 
-                // Chamar o serviço para adicionar a carteira
+         
                 var response = await WalletService.AddWallet(Wallet);
 
                 if (response != null)

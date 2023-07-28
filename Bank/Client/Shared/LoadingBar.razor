@@ -1,0 +1,25 @@
+﻿@page "/loadingbar"
+@using Blazorise
+@using Blazorise.Bootstrap
+
+
+
+<Blazorise Progress Class="mt-3" Animated="true">
+    <ChildContent>
+        <ProgressValue></ProgressValue>
+    </ChildContent>
+</Blazorise>
+
+@code {
+    private int progressValue = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        while (progressValue < 100)
+        {
+            progressValue += 10; // Ou qualquer outra lógica para incrementar o valor da barra
+            StateHasChanged();
+            await Task.Delay(500); // Aguarda meio segundo antes de atualizar a barra
+        }
+    }
+}

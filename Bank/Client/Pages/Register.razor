@@ -10,7 +10,8 @@
 
 
     <div class="central">
-    <form Model="@User">
+    <form Model="@User" id="reg" class="@GetRegStyle()">
+        <h3>Registar</h3>
         <div class="form-group">
             <label for="exampleInputName">Nome</label>
             <input type="text" class="form-control" id="exampleInputName" placeholder="Nome" @bind="@User.FirstName">
@@ -41,13 +42,14 @@
             <input type="text" class="form-control" placeholder="Wallet name" @bind="@Wallet.WalletName">
             <small class="text-danger">@walletNameValidationMessage</small>
         </div>
-        <button type="button" class="btn btn-outline-success btn-lg btn-block" @onclick="HandleValidSubmit">Save User</button>
         @if (showError)
         {
             <div class="alert alert-danger mt-3" role="alert">
                 Por favor, corrija os erros acima antes de enviar o formulário.
             </div>
         }
+        <button type="button" class="btn btn-outline-success btn-lg btn-block" @onclick="HandleValidSubmit">Save User</button>
+    
     </form>
 
     </div>
