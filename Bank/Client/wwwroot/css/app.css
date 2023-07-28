@@ -7,7 +7,7 @@ html, body {
     flex-direction: column;
     justify-content:center;
     align-items:center;
-    color:antiquewhite;
+    color:#fff;
 }
 
 h1:focus {
@@ -69,13 +69,13 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
-    header {
-        height: 7vh;
-        display: flex;
-        justify-content: space-between;
-        width: 70vw;
-        margin: 0 auto;
-    }
+header {
+    height: 7vh;
+    display: flex;
+    justify-content: space-between;
+    width: 70vw;
+    margin: 0 auto;
+}
     
         header > input, button {
             height: 30px;

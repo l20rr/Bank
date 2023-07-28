@@ -57,7 +57,7 @@ namespace Bank.Api
 
             app.UseCors(builder =>
             {
-                builder.WithOrigins("https://localhost:7088")
+                builder.WithOrigins("https://localhost:7088", "https://localhost:44306")
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             });

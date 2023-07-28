@@ -25,5 +25,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Client\Bank.Client.csproj" />
+    <ProjectReference Include="..\Shared\Bank.Shared.csproj" />
+  </ItemGroup>
+
 
 </Project>
