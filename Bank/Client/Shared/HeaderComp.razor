@@ -1,9 +1,9 @@
 ﻿@inject Blazored.LocalStorage.ILocalStorageService localStore
 
 <header>
-    <a href="/"> <b>LOGO</b></a>
+    <a href="/"> <b>Mercado financeiro americano</b></a>
     <div id="search">
-        <input type="text" @bind="Symbol" />
+        <input type="text" @bind="Symbol" @onkeydown="HandleKeyPress" />
         <button id="btn-sh" @onclick="Search">Pesquisar</button>
     </div>
     @if (!string.IsNullOrEmpty(CurrentUserIdString) && int.TryParse(CurrentUserIdString, out int CurrentUserId))
@@ -55,5 +55,13 @@
     {
         await localStore.RemoveItemAsync("CurrentUserId");
         NavigationManager.NavigateTo("/", forceLoad: true);
+    }
+
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            Search();
+        }
     }
 }

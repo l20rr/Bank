@@ -31,7 +31,8 @@ namespace Bank.Api
             services.AddScoped<IUserModel, UserModel>();
             services.AddScoped<IWalletModel, WalletModel>();
             services.AddScoped<ISymbolAcModel, SymbolAcModel>();
-           
+          
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddCors();
 

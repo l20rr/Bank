@@ -73,8 +73,9 @@ header {
     height: 7vh;
     display: flex;
     justify-content: space-between;
-    width: 70vw;
+    width: 65vw;
     margin: 0 auto;
+
 }
     
         header > input, button {
@@ -101,8 +102,8 @@ form{
 
 
 .error-mode {
-    /* Estilos específicos quando showError for verdadeiro */
-    margin-top: 30vh; /* Por exemplo, alterando o margin-top */
+
+    margin-top: 20vh; 
 }
 
 #login {
@@ -200,6 +201,11 @@ header {
 
     #SearchT {
         display: flex;
+    }
+
+    .error-mode {
+      
+        margin-top:500px; 
     }
 
 }

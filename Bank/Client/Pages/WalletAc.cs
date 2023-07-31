@@ -20,7 +20,7 @@ namespace Bank.Client.Pages
         [Inject]
         public ISymbolAcService SymbolAcService { get; set; }
         public SymbolAc SymbolAc { get; set; } = new SymbolAc();
-
+        private User User { get; set; } = new User();
         protected override async Task OnInitializedAsync()
         {
             CurrentUserIdString = await localStore.GetItemAsync<string>("CurrentUserId");
@@ -39,7 +39,6 @@ namespace Bank.Client.Pages
                 symbolsWithCurrentUserId = allSymbols.Where(symbol => symbol.WalletId == currentUserId).ToList();
             }
         }
-
 
 
         private async Task deleteSymbol(string SymbolName)

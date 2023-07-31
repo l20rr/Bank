@@ -16,32 +16,32 @@
 </div>
 
 <div class="section">
-    
-        @if (symbolsWithCurrentUserId.Any())
+
+    @if (symbolsWithCurrentUserId.Any())
+    {
+        @foreach (var symbol in symbolsWithCurrentUserId)
         {
-            @foreach (var symbol in symbolsWithCurrentUserId)
-        {
-    
-            <div  class="itens">
-                 <a   href=@($"details/{symbol.SymbolName}")>@symbol.SymbolName</a>
+
+            <div class="itens">
+                <a href=@($"details/{symbol.SymbolName}")>@symbol.SymbolName</a>
                 <div id="del">
-                @if (EditAcs == true)
-                {
-                 
+                    @if (EditAcs == true)
+                    {
+
                         <button class="btn btn-danger" @onclick="()=>  deleteSymbol(symbol.SymbolName)">
                             Del
                         </button>
-                  
-                }
+
+                    }
                 </div>
             </div>
-            }
         }
-        else
-        {
-            <p>Nenhum símbolo encontrado para o usuário atual.</p>
-        }
- 
+    }
+    else
+    {
+        <p>Nenhum símbolo encontrado para o usuário atual.</p>
+    }
+
 </div>
 
 <link href="WalletAc.razor.css" rel="stylesheet" />

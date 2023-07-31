@@ -43,9 +43,9 @@ namespace Bank.Client.Pages
         }
         private async Task FetchData()
         {
-            string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol={Symbol}&apikey=SGIYAYJ5YOITH6Q6";
+            //string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol={Symbol}&apikey=SGIYAYJ5YOITH6Q6";
             //string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol={Symbol}&apikey=NZWQHLKWKIOXGT5K";
-            //string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=IBM&apikey=demo";
+            string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=IBM&apikey=demo";
             Uri queryUri = new Uri(QUERY_URL);
 
             var response = await HttpClient.GetStringAsync(queryUri);
@@ -123,7 +123,7 @@ namespace Bank.Client.Pages
             CurrentUserIdString = await localStore.GetItemAsync<string>("CurrentUserId");
         }
 
-        private bool saveAc ;
+        private bool? saveAc ;
         private IEnumerable<KeyValuePair<string, TimeSeriesItem>> dados;
 
         public async Task AddSymbolToWallet()
@@ -167,11 +167,16 @@ namespace Bank.Client.Pages
                 {
                     saveAc = true;
                 }
+                else
+                {
+                    saveAc = false;
+                }
             }
             else
             {
                 saveAc = false;
             }
+
         }
 
 

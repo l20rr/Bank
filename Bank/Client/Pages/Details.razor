@@ -36,12 +36,17 @@
             </div>
         }
         <div id="SaveDetails">
-            @if(saveAc == true)
+            @if (saveAc != null)
             {
-                <h3>Salvo</h3>
+                @if (saveAc == true)
+                {
+                    <button class="btn btn-success">Salvo</button>
+                }
+                else
+                {
+                    <button class="btn btn-danger">Já existe</button>
+                }
             }
-            
-
         </div>
         @if (!showFilteredData)
         {

@@ -14,27 +14,27 @@
         <h3>Registar</h3>
         <div class="form-group">
             <label for="exampleInputName">Nome</label>
-            <input type="text" class="form-control" id="exampleInputName" placeholder="Nome" @bind="@User.FirstName">
+            <input type="text" class="form-control" id="exampleInputName" placeholder="Primeiro nome (Letara maiuscula)" @bind="@User.FirstName">
             <small class="text-danger">@firstNameValidationMessage</small>
         </div>
         <div class="form-group">
             <label for="exampleInputLastName">Apelido</label>
-            <input type="text" class="form-control" id="exampleInputLastName" placeholder="Apelido" @bind="@User.LastName">
+            <input type="text" class="form-control" id="exampleInputLastName" placeholder="Ultimo nome (Letara maiuscula)" @bind="@User.LastName">
             <small class="text-danger">@lastNameValidationMessage</small>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" @bind="@User.Email">
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="email@emplo.com" @bind="@User.Email">
             <small class="text-danger">@emailValidationMessage</small>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" @bind="@User.UPassword">
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="6 caracteres, pelo menos 1 letra, 1 número e 2 caracteres especiais" @bind="@User.UPassword">
             <small class="text-danger">@passwordValidationMessage</small>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Repetir Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" @bind="@User.ConfirmPassword">
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Repita a paasword" @bind="@User.ConfirmPassword">
             <small class="text-danger">@confirmPasswordValidationMessage</small>
         </div>
         <div class="form-group">

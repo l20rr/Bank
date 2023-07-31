@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>9e37a615-59bc-4f0f-8631-1acb4dcad734</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

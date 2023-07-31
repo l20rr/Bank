@@ -84,6 +84,21 @@ namespace Bank.Test.Services
         }
 
 
-      
+        [Fact]
+        public async Task DeleteUser_RemovesUserSuccessfully()
+        {
+            // Arrange
+            var faker = new Faker();
+            int userId = faker.Random.Int(1, 1000);
+
+            // Configurar o mock para retornar uma resposta de sucesso (status 204) ao fazer a chamada DELETE
+            A.CallTo(() => fakeHttpClient.DeleteAsync($"api/users/{userId}")).Returns(Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.NoContent)));
+
+            // Act - Tentar excluir o usuário
+            await userDataService.DeleteUser(userId);
+
+            // Assert - Verificar se o método DELETE foi chamado com a URL correta
+            A.CallTo(() => fakeHttpClient.DeleteAsync($"api/users/{userId}")).MustHaveHappenedOnceExactly();
+        }
     }
 }

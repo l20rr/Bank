@@ -7,6 +7,7 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStore
 
 
+
 <div class="central">
 
     @if (User != null)
@@ -25,7 +26,7 @@
                 <h4 for="exampleInputEmail1">Email</h4>
                 <p class="form-control" id="exampleInputEmail1"> @User.Email </p>
             </div>
-        
+
             <button type="button" class="btn btn-outline-dark" @onclick="goEdit">Edit User</button>
         </form>
     }
