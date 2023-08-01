@@ -1,7 +1,17 @@
 {
   "dependencies": {
     "secrets1": {
-      "type": "secrets"
+      "type": "secrets",
+      "connectionId": null
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:Server=tcp:deploybankapp-server.database.windows.net,1433;InitialCatalog=deploybankapp-database23;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;Authentication=\"ActiveDirectoryDefault\";"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:Server=tcp:deploybank-server.database.windows.net,1433;InitialCatalog=deploybank-database;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;Authentication=\"ActiveDirectoryDefault\";",
+      "dynamicId": null
     }
   }
 }

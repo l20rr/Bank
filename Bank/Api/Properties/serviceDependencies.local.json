@@ -1,7 +1,17 @@
 {
   "dependencies": {
     "secrets1": {
-      "type": "secrets.user"
+      "secretStore": null,
+      "resourceId": null,
+      "type": "secrets.user",
+      "connectionId": null
+    },
+    "mssql1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ServiceLinker/locations/westeurope/connectors/ConnectionStringsServertcpdeploybankapps_2C5667F54A",
+      "secretStore": "LocalSecretsFile",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/deploybankapp-server/databases/deploybankapp-database23",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:Server=tcp:deploybankapp-server.database.windows.net,1433;InitialCatalog=deploybankapp-database23;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;Authentication=\"ActiveDirectoryDefault\";"
     }
   }
 }

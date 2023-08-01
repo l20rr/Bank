@@ -34,9 +34,18 @@ namespace Bank.Api
           
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigins",
+                    builder =>
+                    {
+                        builder.WithOrigins("https://pocbank2023.azurewebsites.net")
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
 
-         
+
 
             services.AddControllers();
                 //.AddJsonOptions(options => options.JsonSerializerOptions.ca);
@@ -56,12 +65,8 @@ namespace Bank.Api
 
             app.UseAuthorization();
 
-            app.UseCors(builder =>
-            {
-                builder.WithOrigins("https://localhost:7088", "https://localhost:44306")
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            });
+            app.UseCors("AllowSpecificOrigins");
+
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/Deploybankapp/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsServertcpdeploybankserv_390AB24110",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/deploybankapp-server/databases/deploybankapp-database23",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:Server=tcp:deploybank-server.database.windows.net,1433;InitialCatalog=deploybank-database;Encrypt=True;TrustServerCertificate=False;ConnectionTimeout=30;Authentication=\"ActiveDirectoryDefault\";",
+      "dynamicId": null
+    }
+  }
+}

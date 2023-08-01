@@ -25,6 +25,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
+   
     app.UseWebAssemblyDebugging();
 }
 else

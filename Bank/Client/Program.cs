@@ -8,11 +8,12 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddHttpClient<IUserDataService, UserDataService>(client => client.BaseAddress = new Uri("https://localhost:44340/"));
+builder.Services.AddHttpClient<IUserDataService, UserDataService>(client => client.BaseAddress = new Uri("https://deploybankapp.azurewebsites.net/"));
 
-builder.Services.AddHttpClient<IWalletService, WalletService>(client => client.BaseAddress = new Uri("https://localhost:44340/"));
+builder.Services.AddHttpClient<IWalletService, WalletService>(client => client.BaseAddress = new Uri("https://deploybankapp.azurewebsites.net/"));
 
-builder.Services.AddHttpClient<ISymbolAcService, SymbolAcService>(client => client.BaseAddress = new Uri("https://localhost:44340/"));
+builder.Services.AddHttpClient<ISymbolAcService, SymbolAcService>(client => client.BaseAddress = new Uri("https://deploybankapp.azurewebsites.net/"));
+
 
 builder.Services.AddBlazoredLocalStorage();
 
