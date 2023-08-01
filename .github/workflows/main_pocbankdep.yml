@@ -33,6 +33,7 @@ jobs:
          with:
         name: public
         path: public
+        needs: builddownload-artifact
 
   deploy:
     runs-on: windows-latest
