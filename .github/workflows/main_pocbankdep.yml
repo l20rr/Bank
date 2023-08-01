@@ -30,10 +30,9 @@ jobs:
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
-         with:
-        name: public
-        path: public
-        needs: builddownload-artifact
+        with:
+          name: .net-app
+          path: public
 
   deploy:
     runs-on: windows-latest
