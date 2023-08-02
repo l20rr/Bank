@@ -31,7 +31,8 @@ namespace Bank.Client.Pages
             // Fetch database
             var allUsers = await UserDataService.GetAllUsers();
 
-            // Find the user with the given email
+          
+            // Find the user with linq
             var userToLogin = allUsers.FirstOrDefault(u => u.Email == User.Email);
 
             if (userToLogin != null)
