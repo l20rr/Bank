@@ -43,7 +43,7 @@ namespace Bank.Client.Pages
             }
             else
             {
-                // Se algum campo não for válido, exibe mensagem de erro
+                // error message
                 showError = true;
             }
 
@@ -94,7 +94,7 @@ namespace Bank.Client.Pages
 
         private bool ValidateEmail()
         {
-            // Expressão regular para validar o formato do email
+            // regex email
             string emailPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
             bool isEmailValid = Regex.IsMatch(User.Email, emailPattern);
 
