@@ -54,17 +54,18 @@ namespace Bank.Client.Pages
             {
                 WalletById = await WalletService.GetWalletId(currentUserId);
 
-                // Carrega os símbolos com o currentUserId
+                
                 var allSymbols = await SymbolAcService.GetAllSymbols();
 
-                // Filtra os símbolos com base no currentUserId e SymbolName
+                // Fetch currentUserId e SymbolName
                 var symbolsNameId = allSymbols.Where(symbol => symbol.WalletId == currentUserId && symbol.SymbolName == SymbolName).ToList();
 
                 if (symbolsNameId.Any())
                 {
+                    //Search for wallet symbols
                     foreach (var symbol in symbolsNameId)
                     {
-                        // DeleteSymbol aceita um ID inteiro para deletar o símbolo
+                        
                         SymbolAcService.DeleteSymbol(symbol.SymbolId);
                     }
                     NavigationManager.NavigateTo("/wallet", forceLoad: true);
