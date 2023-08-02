@@ -25,10 +25,9 @@ O *Projeto Bank* oferece as seguintes funcionalidades:
 Para executar a aplicação localmente, siga os passos abaixo:
 
 1. Clone o repositório para o seu computador.
-2. Certifique-se de ter o **.NET Core** e o **Node.js** instalados.
-3. No terminal, navegue até a pasta do projeto e execute o comando `dotnet run` para iniciar o servidor backend.
-4. Abra outra instância do terminal, navegue até a pasta "Client" dentro do projeto e execute o comando `dotnet run` para iniciar o servidor frontend.
-5. Acesse a aplicação no seu navegador através do endereço `http://localhost:5000`.
+2. Certifique-se de ter o **.NET Core** instalado.
+3. Na solução pode inicar a API e o client ou somente o Client
+4. Certifique que a url é **https://localhost:7088**
 
 ## Contribuição
 
