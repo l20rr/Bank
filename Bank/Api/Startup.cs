@@ -39,7 +39,7 @@ namespace Bank.Api
                 options.AddPolicy("AllowSpecificOrigins",
                     builder =>
                     {
-                        builder.WithOrigins("https://pocbank2023.azurewebsites.net")
+                         builder.WithOrigins("https://pocbank2023.azurewebsites.net", "https://localhost:7088/")
                                .AllowAnyHeader()
                                .AllowAnyMethod();
                     });
