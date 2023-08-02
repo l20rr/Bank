@@ -129,7 +129,7 @@ namespace Bank.Client.Pages
 
         private bool ValidateEmail()
         {
-            // Expressão regular para validar o formato do email
+            // regex email
             string emailPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
             bool isEmailValid = Regex.IsMatch(User.Email, emailPattern);
 
