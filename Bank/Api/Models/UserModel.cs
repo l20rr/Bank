@@ -55,10 +55,10 @@ namespace Bank.Api.Models
 
         public void DeleteUser(int userId)
         {
-            var foundEmployee = _appDbContext.Users.FirstOrDefault(e => e.UserId == userId);
-            if (foundEmployee == null) return;
+            var foundUser = _appDbContext.Users.FirstOrDefault(e => e.UserId == userId);
+            if (foundUser == null) return;
 
-            _appDbContext.Users.Remove(foundEmployee);
+            _appDbContext.Users.Remove(foundUser);
             _appDbContext.SaveChanges();
         }
 
