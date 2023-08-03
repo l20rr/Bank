@@ -33,7 +33,7 @@ namespace Bank.Client.Services
         public async Task<IEnumerable<Wallet>> GetAllWallets()
         {
             return await JsonSerializer.DeserializeAsync<IEnumerable<Wallet>>
-                   (await _httpClient.GetStreamAsync($"api/users"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                   (await _httpClient.GetStreamAsync($"api/wallet"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
 
         }
 
